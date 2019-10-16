@@ -10,10 +10,13 @@ namespace TestingExample.Models.Tests
     public class StringHelperTests
     {
         [TestMethod()]
-        public void IsTextFile_ValidTextFile_ReturnsTrue()
+        [DataRow("joe.txt")]
+        [DataRow("joe.TXT")]
+        [DataRow("  october2019.txt")]
+        [DataRow("joe.txt   ")]
+        [DataRow("   joe.txt   ")]
+        public void IsTextFile_ValidFileName_ReturnsTrue(string fileName)
         {
-            // arrange
-            string fileName = "joe.txt";
 
             // act
             bool result = StringHelper.IsTextFile(fileName);
@@ -22,5 +25,23 @@ namespace TestingExample.Models.Tests
             Assert.IsTrue(result);
 
         }
+
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow(".text")]
+        [DataRow("hello world")]
+        [DataRow(".txt")]
+        [DataRow("   .txt")]
+        public void IsTextFile_InvalidFileName_ReturnsFalse(string fileName)
+        {
+            bool result = StringHelper.IsTextFile(fileName);
+
+            Assert.IsFalse(result);
+        }
+
+
+
     }
 }
