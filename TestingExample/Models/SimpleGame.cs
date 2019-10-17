@@ -13,6 +13,8 @@ namespace TestingExample.Models
     {
         private int? game1;
 
+
+
         public int? Game1 
         {
             get 
@@ -21,20 +23,28 @@ namespace TestingExample.Models
             }
             set
             {
-                if ( value < 0 || value > 300 )
-                {
-                    throw new ArgumentOutOfRangeException("Game scores must be " +
-                        "between 0 and 300 inclusive.");
-                }
+                ValidateGameScores(value, out game1);
                 game1 = value;
             }
+        }
+
+        private  void ValidateGameScores(int? s, out int? game)
+        {
+            if ( !s.HasValue || s < 0 || s > 300)
+            {
+                throw new ArgumentOutOfRangeException("Game scores must be " +
+                    "between 0 and 300 inclusive.");
+            }
+            game = s.Value;
         }
 
         public int? Game2 { get; set; }
 
         public int? Game3 { get; set; }
 
-        public int? Game4
+        public int? Game4 { get; set; }
+
+        public int TotalSCore
         {
             get
             {
